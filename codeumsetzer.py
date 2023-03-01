@@ -129,4 +129,5 @@ def get_indices_to_check(matrix, current, step):
 # print(len(bits_list))
 # print(math.ceil(len(bits_list)/((2**4)-4-1)))
 # print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
+# print(bits_to_blocks(bits_list, 4))
 # print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 1, 1))
