@@ -92,6 +92,9 @@ revisiones.
 Finalmente, el código inferior fue ayudando a ir probando cada una de las
 funciones.
 
+Ahora, procedamos a implementar el módulo dekodierer.py
+
+
 
 
 
