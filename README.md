@@ -114,6 +114,11 @@ Dicha cadena es el mensaje descodificado.
 para obtener la información de una lista de matrices, descartando bits
 de paridad y bits sin información al final del mensaje.)
 
+Cabe mencionar que tanto codeumsetzer.py como dekodierer.py funcionan con
+matrices con 2^n bits con n > 4. Con... un ligero detalle: dekodierer
+parece agregar información que no existía antes en el mensaje original
+cuando la matriz es demasiado grande... con n = 7 ocurrió.
+
 Ahora, con hamming_code.py, agregamos la función noise() que recibe una matriz
 e invierte un índice de la misma al azar.
 
