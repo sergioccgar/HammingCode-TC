@@ -36,4 +36,10 @@ el mensaje codificado en él. Una vez tengamos estos dos módulos
 procederemos al algoritmo y a la implementación estrellas de la
 práctica: el Hamming Code.
 
+El módulo que codificará las cadenas se llamará codeumsetzer, que 
+es alemán para codificador, porque estudio alemán pero Ciencias
+no me deja mucho tiempo para practicar así que de algún lado habrá
+que sacar la práctica y el vocabulario. Análogamente, el módulo que
+decodificará cadenas de unos se llamará dekodierer.
+
 
