@@ -110,6 +110,10 @@ Dicha cadena es el mensaje descodificado.
 
 ¡Yay! Ahora sólo falta el módulo hamming_code.py
 
+(Bueno, antes de continuar, agregamos la función get_info() e dekodieren.py,
+para obtener la información de una lista de matrices, descartando bits
+de paridad y bits sin información al final del mensaje.)
+
 
 
 
