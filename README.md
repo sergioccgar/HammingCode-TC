@@ -120,6 +120,11 @@ parece agregar información que no existía antes en el mensaje original
 cuando la matriz es demasiado grande... con n = 7 ocurrió. Igualmente, faltó
 agregar el cálculo del bit de paridad total.
 
+¡Ya hay una idea de cómo evitar que se agregue información que no existía antes!
+Habrá que destinar una cierta cantidad de bits que permita almacenar la longitud
+del mensaje original. De esta manera sabremos en qué momento dejar de recuperar
+información de las matrices.
+
 Ahora, con hamming_code.py, agregamos la función noise() que recibe una matriz
 e invierte un índice de la misma al azar.
 
