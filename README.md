@@ -114,6 +114,9 @@ Dicha cadena es el mensaje descodificado.
 para obtener la información de una lista de matrices, descartando bits
 de paridad y bits sin información al final del mensaje.)
 
+Ahora, con hamming_code.py, agregamos la función noise() que recibe una matriz
+e invierte un índice de la misma al azar.
+
 
 
 
