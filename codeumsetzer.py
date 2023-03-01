@@ -76,6 +76,11 @@ def bits_to_blocks(bits_list, flag):
         for index in parity_bits_indices:
             matrix[index] = calculate_parity(matrix, index)
 
+        # Se calcula el valor del bit de paridad total.
+        for i in range(1, len(matrix)):
+            x =0
+            matrix[0] ^= matrix[i]
+
         # Se agrega la matriz a la lista final.
         block_list.append(matrix)
     return block_list
@@ -128,7 +133,7 @@ print(list_of_bytes)
 print(bits_list)
 print(len(bits_list))
 # print(math.ceil(len(bits_list)/((2**4)-4-1)))
-# print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
+print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
 # print(bits_to_blocks(bits_list, 4))
 # print(math.ceil(len(bits_list)/((2**5)-5-1)))
 # print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 5)]))
@@ -139,5 +144,5 @@ print(len(bits_list))
 # print(math.ceil(len(bits_list)/((2**7)-7-1)))
 # print(len(bits_list)/((2**7)-7-1))
 # print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 7)]))
-print(bits_to_blocks(bits_list, 7))
+# print(bits_to_blocks(bits_list, 7))
 print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 1, 1))
