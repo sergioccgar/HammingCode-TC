@@ -29,7 +29,7 @@ def binary_string_to_list(message):
 
 '''
  Función que dada una cadena con un mensaje codificado en bits (la salida de
- string_to_binary), devuelve una lista de números, a saber, 0s y 1s.
+ string_to_binary()), devuelve una lista de números, a saber, 0s y 1s.
 '''
 def bits_string_to_bits_list(bits_string):
     bits_list = []
@@ -55,22 +55,28 @@ def bits_string_to_bits_list(bits_string):
 def bits_to_blocks(bits_list, flag):
     block_list = []
     parity_bits_indices = []
+
+    # Obtenemos los índices de los bits de paridad.
     for i in range(flag+1):
         parity_bits_indices.append(POWERS[i])
+
+    # Este ciclo genera una matriz de 2**flag elementos
     for i in range(math.ceil(len(bits_list)/((2**flag)-flag-1))):
         matrix = []
-        for j in range(2**flag):
+        for j in range(2**flag):   # Este loop inicializa los índices de paridad como 0
             if j in POWERS:
                 matrix.append(0)
-            else:
-                if not bits_list:
+            else:                  # y agrega los bits de información en el resto.
+                if not bits_list:  # si la lista de información se termina, llenamos el resto de la matriz con 0s.
                     matrix.append(0)
                 else:
-                    matrix.append(bits_list.pop(0))
-        print(matrix)
+                    matrix.append(bits_list.pop(0))  # se agregan los bits de información a bits no de paridad.
+
+        # Se calcula el valor de los bits de paridad.
         for index in parity_bits_indices:
             matrix[index] = calculate_parity(matrix, index)
-        print(matrix)
+
+        # Se agrega la matriz a la lista final.
         block_list.append(matrix)
     return block_list
 
@@ -101,24 +107,26 @@ def calculate_parity(matrix, current):
 def get_indices_to_check(matrix, current, step):
     indices = []
     i = current
+
+    # Obtenemos los índices a revisar por el bit de paridad.
     while i < len(matrix):
         for j in range(step):
-            if i+j >= len(matrix):
+            if i+j >= len(matrix):  # No se agregan bits que no le corresponden revisar al bit de paridad actual.
                 break
-            indices.append(i+j)
-        i += 2 * step
+            indices.append(i+j)  # Agregamos todos los índices de los bits por revisar
+        i += 2 * step  # Nos saltamos bits que no revisaremos
     return indices
 
 
-my_string = string_to_binary("Hallo Pichi -")
-list_of_bytes = binary_string_to_list(my_string)
-bits_list = bits_string_to_bits_list(my_string)
-
-print(POWERS)
-print(my_string)
-print(list_of_bytes)
-print(bits_list)
-print(len(bits_list))
-print(math.ceil(len(bits_list)/((2**4)-4-1)))
-print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
-print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 1, 1))
+# my_string = string_to_binary("Hallo Pichi -")
+# list_of_bytes = binary_string_to_list(my_string)
+# bits_list = bits_string_to_bits_list(my_string)
+#
+# print(POWERS)
+# print(my_string)
+# print(list_of_bytes)
+# print(bits_list)
+# print(len(bits_list))
+# print(math.ceil(len(bits_list)/((2**4)-4-1)))
+# print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
+# print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 1, 1))
