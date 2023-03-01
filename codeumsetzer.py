@@ -1,8 +1,8 @@
 import math
 '''
-Módulo encargado de convertir una cadena dada a un arreglo de bits. Después organizará dichos
-bits en bloques de tamaño x dependiendo de los bits por matriz que tendremos. Notemos que los
-bits por matriz que tendremos son potencias de 2.
+ Módulo encargado de convertir una cadena dada a un arreglo de bits. Después organizará dichos
+ bits en bloques de tamaño x dependiendo de los bits por matriz que tendremos. Notemos que los
+ bits por matriz que tendremos son potencias de 2.
 '''
 
 POWERS = [0] + ([2**i for i in range(16)])
