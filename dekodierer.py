@@ -11,19 +11,10 @@ def dekodieren(liste):
     long_string = ""  # Cadena de 0s y 1s
     for bit in liste:
         long_string += str(bit)
-    # print(long_string)
-    # Usamos la función implementada en codeumsetzer.py para tener una lista de cadenas
-    # donde cada cadena tiene 8 caracteres y dichos caracteres representan un byte, que
-    # a su vez, representa un símbolo en UTF-8.
-    byte_list = binary_string_to_list(long_string)
-    # print(byte_list)
-    decimal_list = []  # Convertimos las cadenas de bytes a enteros en base 10.
-    for byte in byte_list:
-        decimal_list.append(int(byte, 2))
-    # print(decimal_list)
+    byte_list = binary_string_to_list(long_string)  # Favor de leer documentación de esta función en codeumsetzer.py
     nachricht = ""  # Nachricht es mensaje en alemán.
-    for decimal in decimal_list:
-        nachricht += chr(decimal)
+    for byte in byte_list:
+        nachricht += chr(int(byte, 2))
     return nachricht
 
 

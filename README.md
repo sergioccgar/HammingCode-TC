@@ -92,7 +92,23 @@ revisiones.
 Finalmente, el código inferior fue ayudando a ir probando cada una de las
 funciones.
 
+
 Ahora, procedamos a implementar el módulo dekodierer.py
+
+Este módulo posee únicamente una función: dekodieren().
+Es una función muy directa. Primero creamos una cadena vacía, luego,
+por cada bit en la lista recibida, lo convertimos a cadena y lo
+concatenamos con la cadena vacía. Partimos esta cadena en subcadenas
+de longitud 8 con la función importada y cada subcadena forma ahora
+parte de una lista que se almacena en byte_list.
+Creamos una nueva cadena vacía y por cada cadena que representa un byte
+en byte_list, convertimos esta cadena a un entero en base 10 con
+int(byte, 2) y luego lo convertimos a char, para concatenarlo finalmente
+con la cadena nachricht y luego devolver esta misma cadena.
+
+Dicha cadena es el mensaje descodificado.
+
+¡Yay! Ahora sólo falta el módulo hamming_code.py
 
 
 
