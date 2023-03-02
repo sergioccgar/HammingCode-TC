@@ -38,3 +38,9 @@ def dekodieren(liste):
 # info = get_info(list_of_matrices)
 # print(info)
 # print(f"{dekodieren(info)}{len(dekodieren(info))}")
+
+# Ejercicios
+# bloques = [[1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0],
+#            [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+#
+# print(dekodieren(get_info(bloques)))

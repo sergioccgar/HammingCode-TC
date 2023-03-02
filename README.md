@@ -3,7 +3,12 @@
 ### Integrantes: Sergio Medina Guzmán 314332428
 
 ## Para ejecutar:
-Esto lo llenaré al terminar la práctica.
+1. Es necesario tener Python3.8 instalado
+2. Abre una terminal en donde se encuentre main.py
+3. Compila y ejecuta con
+```
+python main.py
+```
 
 ### Introducción:
 
@@ -82,16 +87,38 @@ La función calculate_parity() asigna los valores de los bits de paridad. Si
 el bit de paridad es el 0, mantiene su valor de 0. Si es mayor, invoca
 a la función auxiliar get_indices_to_check() para saber, dado el índice
 del bit de paridad, qué indices de la matriz deberá revisar para obtener
-su valor. La paridad se inicializa como 0 y por cada bit que revisa, se 
-ejecuta la operación XOR con el operador ^=.
+su valor; calcula el logaritmo base dos del índice actual y le suma 1, esto
+nos devuelve qué bit de paridad es con el que trabajará get_indices_to_check();
+es decir, si el bit de paridad es el 1, su índice en la matriz es 1, si es el 2
+, su índice en la matriz es 2, si es el 3, su índice es el 4, si es el 4, su índice
+es el 8, y así sucesivamente. De esta manera, mientras que calculate_parity() recibe
+EL ÍNDICE DEL BIT DE PARIDAD, get_indices_to_check() recibe QUÉ NUMERO DE BIT ES, si
+el primero, el segundo, el tercero, etc.
+La paridad se inicializa como 0 y por cada bit que revisa, se 
+ejecuta la operación XOR con el operador ^=, finalmente, revisa el número de
+1s en la matriz, si es par, el bit de paridad total será 0. Si es impar,
+el bit de paridad total será 1.
+Nota, la forma en que se calcula la paridad, en esta implementación, es que el bit de paridad n revisa
+los bits cuyo índice en la matriz al representarse en binario, tienen un 1
+en la posición n. Esto es, el bit de paridad 1 revisa los bits cuyos índices
+tienen un 1 en la posición menos significativa de su representación en binario.
+Esto es, revisa los números impares.
+Esto es consistente con las columnas/filas que el bit de paridad revisa visto
+en las ayudantías. Se generaliza de esta manera para poder tener matrices de
+2^n bits con n>4.
+El bit de paridad 2, revisa los bits cuyos índices tienen un 1 en la segunda posición
+de su representación en binario.
+Esto es, revisa los bits cuyos índices en la matriz son de la forma ...xx1x, donde los
+puntos y las x's representan bits del índice. Por ejemplo, este bit de paridad 
+revisará los bits cuyos índices en binario son 10, 11, 110, 111, 1010, 1011, 1110 y 1111
+es decir, revisará los bits cuyo índice en la matriz es 2, 3, 6, 7, 10, 11, 14, 15, etc.
 
 Finalmente (ay), la función get_indices_to_check() recibe una matriz,
 el índice del bit de paridad actual y el salto que va a tener en sus
-revisiones.
+revisiones. ¡CORREGIMOS ESTO!
 
 Finalmente, el código inferior fue ayudando a ir probando cada una de las
 funciones.
-
 
 Ahora, procedamos a implementar el módulo dekodierer.py
 
@@ -128,7 +155,137 @@ información de las matrices.
 Ahora, con hamming_code.py, agregamos la función noise() que recibe una matriz
 e invierte un índice de la misma al azar.
 
+Pasamos a implementar la función check(). Recibimos una matriz. Obtenemos todos
+los índices cuyos valores sean un 1, convertimos esos índices a binario y
+aplicamos la función XOR a todo. Si hubo ruido, el resultado final no será
+conformado únicamente por ceros, sino que será la representación en binario
+del índice que tuvo ruido.
 
+Bueno, encontramos problemas con la función check, ya que en matrices aparentemente
+correctas indicaba que había un índice con ruido. ¿Qué pasó? Estábamos calculando
+mal los bits que cada bit de paridad revisa. Corregimos las funciones:
+calculate_parity()
+get_indices_to_check()
+En codeumsetzer.py
 
+Antes de encontrar y trabajar con estos problemas, implementamos la función reparador()
+que recibe una matriz y el índice del bit con ruido para corregirlo.
 
+A lo largo de estas implementaciones, se programó el módulo main. Se escribieron
+algunas pruebas para verificar el correcto trabajo de todos los módulos.
 
+Procedemos a comentar dichas pruebas (dejamos las pruebas comentadas en cada módulo
+en caso de querer probar y jugar nuevamente con ellas).
+
+Ahora, escribimos el programa en main con el cual interactuará el usuario.
+¡Listo! El main y la ejecución del programa son de la siguiente manera:
+
+Recibes un saludo.
+Se te solicita ingresar el mensaje que pondrá a prueba el programa.
+Se te solicita ingresar un entero n que determinará que cada bloque hamming tendrá
+2^n elementos con n >= 4.
+Se muestran las matrices en las que el mensaje se codificó.
+Clip cinemático para agregar drama
+Se recibe el mensaje con errores (o sin errores)
+Se muestran las matrices recibidas después del ruido.
+Más clip cinemático para acumular tensión.
+Se indica qué bits en cada matriz son los bits con ruido.
+Se corrigen y se muestra el mensaje original.
+Pichi se despide (¿Apoco trabaja aquí?)
+
+### Conclusiones
+
+Estamos cansados. Fue muy divertido y aprendí muchas cosas sobre python. Ya teníamos un poco
+de experiencia programando en este lenguaje así que lo que ocupó más tiempo fue consultar
+documentación en funciones del mismo o cómo hacer una u otra cosa. Se pueden generar matrices
+de tamaño hasta 2^16.
+
+Aunque la práctica no fue difícil per se, sí creo que fue demasiada "talacha". Creo que puedo
+mejorar en mi familiarización con el lenguaje para tener aún más herramientas y saber qué
+puedo hacer y cómo hacerlo.
+
+# Preguntas.
+
+1. Del bloque 1. Obtenemos los índices de los bits con 1s: 1, 5, 6, 13 y 14. En binario son
+0001, 0101, 0110, 1101, 1110. Hacemos XOR con cada índice y obtenemos 0001. El mensaje es incorrecto
+y el bit con ruido es el bit con índice 0. Aunque realmente esto no modificará la información
+guardada en el bloque, pues se alteró el bit de paridad total.
+Se puede comprobar esta respuesta en el código comentado en hamming_code.py, hasta abajo,
+en la parte "Ejercicios."
+2. Los índices de los bits con 1s son 0, 2, 4, 5, 7, 8, 13, 14, 15. En binario son 
+0000, 0010, 0100, 0101, 0111, 1000, 1101, 1110, 1111, al aplicar XOR tenemos que
+el bit modificado es el 0. Se puede comprobar en la misma sección en hamming_code.py
+3. Bob.
+Bob recibió ¹. Tenemos lo siguiente en la consola de python:
+```
+a = "10111001"
+b = "10001000"
+a = chr(int(a, 2))
+b = chr(int(b, 2))
+a
+'¹'
+b
+'\x88'
+```
+Para recibir "XD" debería cambiar sus bloques por los siguientes:
+```
+ Bloque A
+ 0, 1, 0, 0,
+ 1, 1, 0, 1,
+ 0, 1, 0, 0,
+ 0, 0, 1, 0
+ Bloque B
+ 1, 0, 1, 0,
+ 1, 0, 1, 0,
+ 0, 0, 0, 0,
+ 0, 0, 0, 0 
+```
+4. 00110001110 Escribimos los primeros 11 bits en un bloque escribiendolos
+en los bits que NO son destinados a los de paridad e iniciamos los bits de paridad como x.
+```
+Bloque
+xxx0
+x011
+x000
+1110
+```
+El bit de paridad 1 revisa los bits de la columna 2 y 4. Hay dos unos, por lo que será 0
+El bit de paridad 2 revisa los bits de las columnas 3 y 4. Hay tres unos, por lo que será 1
+El bit de paridad 3 (el índice 4) revisa los bits de las filas 2 y 4. Hay cinco unos, por lo que será 1
+El bit de paridad 4 (el índice 8) revisa los bits de las filas 3 y 4. Hay tres unos, por lo que será 1.
+```
+Bloque
+x010
+1011
+1000
+1110
+```
+Finalmente, tenemos 8 1s, por lo que el bit de paridad total será 0. Tenemos entonces.
+```
+Bloque
+0010
+1011
+1000
+1110
+```
+Podemos comprobar la respuesta en el código comentado en la sección de ejercicios en 
+codeumsetzer.py
+5. 5 medios en los cuales se transfiere la información por bits
+- Bluetooth. Cada bit se representa mediante una variación en la frecuencia de la señal de radio que se envía y se recibe entre los dispositivos.
+- Tarjetas SD. Cada bit se representa mediante una variación en el voltaje de la señal eléctrica que se transmite a través de los contactos metálicos de la tarjeta.
+- Cable de cobre. La información se transmite en forma de señales eléctricas y cada bit se representa mediante una variación en la intensidad o voltaje de la señal.
+- Redes como 4G y 5G. Cada bit se representa mediante una variación en la frecuencia de la señal de radio que se envía y se recibe entre el dispositivo móvil y la antena de la red.
+- Wi-Fi. Cada bit se representa mediante una variación en la frecuencia de la señal de radio que se envía y se recibe entre el dispositivo y el punto de acceso Wi-Fi.
+## Puntos extra
+- Crea un envío de mensajes utilizando Sockets en lugar de utilizar una variable, donde tanto servidor
+como cliente puedan corregir el mensaje automáticamente.
+- Desarrolla el ruido para que aleatoriamente pueda tener 0, 1 o 2 errores (máximo) y que sea capaz de
+detectar si no hay error, hay 1 (este sí es obligatorio) o si hay 2 errores (aunque no se sepa cuales bits)
+- Modifica el algoritmo para bloques de 256 bits(16 x 16) para que contenga más información por
+bloque.
+
+### Puntos extra entregados. 
+- Modifica el algoritmo para bloques de 256 bits(16 x 16) para que contenga más información por
+bloque.
+
+Nota. Desde el principio se construyó el algoritmo para bloques de hasta 256 bits.

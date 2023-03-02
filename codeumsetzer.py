@@ -77,9 +77,8 @@ def bits_to_blocks(bits_list, flag):
             matrix[index] = calculate_parity(matrix, index)
 
         # Se calcula el valor del bit de paridad total.
-        for i in range(1, len(matrix)):
-            x =0
-            matrix[0] ^= matrix[i]
+        for j in range(1, len(matrix)):
+            matrix[0] ^= matrix[j]
 
         # Se agrega la matriz a la lista final.
         block_list.append(matrix)
@@ -89,51 +88,49 @@ def bits_to_blocks(bits_list, flag):
  Función que calcula el valor del bit de paridad. Recibe una matriz y el índice del bit
  de paridad actual, calcula los índices de los  bits de la matriz que debe revisar para
  determinar su valor de paridad y finalmente calcula el mismo. Para obtener los índices
- hace uso de la función auxiliar get_indices_to_check(), pasando la matriz actual, el
- índice de paridad y el salto es el log2(current)+1, pues esto nos indica qué número
- de bit de paridad estamos revisando (el primero, el segundo, el tercero, el cuarto;
- que corresponden al índice 1, 2, 4, 8, y así sucesivamente.
+ hace uso de la función auxiliar get_indices_to_check(), pasando la matriz actual y el
+ índice de paridad, pues esto nos indica qué número de bit de paridad estamos revisando
+ (el primero, el segundo, el tercero, el cuarto); que corresponden al índice 1, 2, 4, 8,
+ y así sucesivamente.
 '''
 def calculate_parity(matrix, current):
     if current == 0:
         return 0
-    bit_indices = get_indices_to_check(matrix, current, int(math.log2(current) + 1))
+    bit_indices = get_indices_to_check(matrix, int(math.log2(current) + 1))
     parity = 0
     for i in bit_indices:
         parity ^= matrix[i]
     return parity
 
 '''
- Función que recibe una matriz, un índice current y un salto step. Devuelve los índices
- de la matriz que el bit de paridad con índice current revisará para obtener su valor
- de paridad. Si es el índice 1, sabemos que revisa uno y se salta uno, si el índice es
- 2, revisa dos y se salta dos, si es 4, revisa 3 y se salta tres.
+ Función que recibe una matriz y un índice current. El índice es el n bit de paridad en
+ la matriz (el primero (índice 1), el segundo (índice 2), el tercero (índice 4)...).
+ Esto es, si current es 4, entonces es el cuarto bit de paridad, que es el índice 8 en
+ la matriz.
 '''
-def get_indices_to_check(matrix, current, step):
-    indices = []
-    i = current
+def get_indices_to_check(matrix, current):
+    indices_to_check = []
+    matrix_indices = []
+    for i in range(len(matrix)):
+        matrix_indices.append(bin(i)[2:])
+    for index in matrix_indices:
+        if len(index) >= current and index[-current] == "1":
+            indices_to_check.append(int(index, 2))
+    return indices_to_check
 
-    # Obtenemos los índices a revisar por el bit de paridad.
-    while i < len(matrix):
-        for j in range(step):
-            if i+j >= len(matrix):  # No se agregan bits que no le corresponden revisar al bit de paridad actual.
-                break
-            indices.append(i+j)  # Agregamos todos los índices de los bits por revisar
-        i += 2 * step  # Nos saltamos bits que no revisaremos
-    return indices
+# print(get_indices_to_check([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 4))
 
+# my_string = string_to_binary("Hallo Pichi -")
+# list_of_bytes = binary_string_to_list(my_string)
+# bits_list = bits_string_to_bits_list(my_string)
 
-my_string = string_to_binary("Hallo Pichi -")
-list_of_bytes = binary_string_to_list(my_string)
-bits_list = bits_string_to_bits_list(my_string)
-
-print(POWERS)
-print(my_string)
-print(list_of_bytes)
-print(bits_list)
-print(len(bits_list))
+# print(POWERS)
+# print(my_string)
+# print(list_of_bytes)
+# print(bits_list)
+# print(len(bits_list))
 # print(math.ceil(len(bits_list)/((2**4)-4-1)))
-print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
+# print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
 # print(bits_to_blocks(bits_list, 4))
 # print(math.ceil(len(bits_list)/((2**5)-5-1)))
 # print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 5)]))
@@ -145,4 +142,9 @@ print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 4)]))
 # print(len(bits_list)/((2**7)-7-1))
 # print('\n'.join([str(x) for x in bits_to_blocks(bits_list, 7)]))
 # print(bits_to_blocks(bits_list, 7))
-print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 1, 1))
+# print(get_indices_to_check([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 4))
+# print(calculate_parity([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1], 8))
+
+# Ejercicios
+# bloque = bits_to_blocks([0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0], 4)
+# print(bloque)
