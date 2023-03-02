@@ -19,9 +19,7 @@ def check(matrix):
     for i in range(len(matrix)):
         if matrix[i] == 1:
             one_indices.append(format(i, '04b'))
-            # print(i)
     xor = bin(int(one_indices[0], 2) ^ int(one_indices[1], 2))[2:].zfill(4)
-    print(one_indices)
     for i in range(2, len(one_indices)):
         xor = bin(int(xor, 2) ^ int(one_indices[i], 2))[2:].zfill(4)
     xor = int(xor, 2)
